@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\StoreAdminRequest;
 use App\Http\Requests\UpdateAdminRequest;
-use App\Models\Admin;
+use App\Models\Category;
+use App\Http\Controllers\Controller;
 
 class AdminController extends Controller
 {
@@ -13,8 +14,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        
-        return view('admin.category.index', );
+        $categories = Category::get();
+        return view('admin.category.index', ['categories' => $categories]);
     }
 
     /**
