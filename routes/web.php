@@ -1,7 +1,8 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,4 +19,22 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin',AdminController::login);
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/dashboard/category/show', [CategoryController::class, 'show'])->name('category.show');
+    Route::get('/dashboard/category/create', [CategoryController::class, 'create'])->name('category.create');
+    Route::post('/dashboard/category/store', [CategoryController::class, 'store'])->name('category.store');
+    Route::get('/dashboard/category/edit', [CategoryController::class, 'edit'])->name('category.edit');
+    Route::post('/dashboard/category/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::get('/dashboard/category/delete', [CategoryController::class, 'delete'])->name('category.delete');
+
+});
+
+require __DIR__.'/auth.php';
