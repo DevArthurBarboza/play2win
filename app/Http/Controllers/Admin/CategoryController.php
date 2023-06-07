@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreAdminRequest;
-use App\Http\Requests\UpdateAdminRequest;
 use App\Models\Category;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -29,23 +28,20 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store($request)
+    public function store(Request $request)
     {
-
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
         $category->save();
-
-        exit;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show()
     {
-        //
+        // return view()
     }
 
     /**

@@ -12,6 +12,6 @@
 
     </head>
     <body class="antialiased">
-        <a href="/admin">Acessar Admin</a>
+        <a href="/dashboard">Acessar Admin</a>
     </body>
 </html>

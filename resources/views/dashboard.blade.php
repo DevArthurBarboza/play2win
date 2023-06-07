@@ -3,8 +3,8 @@
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
 
-            <a href="{{Request::url()}}dashboard/category/create">| Criar Categoria |</a>
-            <a href="{{Request::url()}}dashboard/category/show">Mostrar Categorias</a>
+            <a href="/dashboard/category/create">| Criar Categoria |</a>
+            <a href="/dashboard/category/index">Mostrar Categorias</a>
         </h2>
     </x-slot>
 
