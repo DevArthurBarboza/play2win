@@ -25,6 +25,13 @@ class AdminController extends Controller
         return view('admin.category.create');
     }
 
+    public function triggerSeeder()
+    {
+        $adminSeeder = new \Database\Seeders\AdminSeeder;
+        $adminSeeder->run();
+        return redirect()->route('dashboard');
+    }
+
     /**
      * Store a newly created resource in storage.
      */

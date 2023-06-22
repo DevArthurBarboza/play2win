@@ -5,16 +5,32 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreGameRequest;
 use App\Http\Requests\UpdateGameRequest;
 use App\Models\Game;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Type;
+use App\Models\Category;
 
 class GameController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        //
+        $game = Game::find($id);
+
+        $category = Category::find($game->category_id);
+        $type = Type::find($category->type_id);
+        if($type->code == "Roleta"){
+            return view('game.roleta',['user' => Auth::user()]);
+        }
+        if($type->code == "Crash"){
+            return view('game.crash',['user' => Auth::user()]);
+        }
+        if($type->code == "Roleta"){
+            return view('game.roleta',['user' => Auth::user()]);
+        }
     }
+
 
     /**
      * Show the form for creating a new resource.

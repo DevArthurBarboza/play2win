@@ -14,19 +14,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="/dashboard/category/store" method="POST">
+                    <form action="/dashboard/category/update/{{$category->id}}" method="POST">
                         @csrf
+                        @method('PUT')
                         <label for="name">Nome</label>
-                        <input type="text" name="name" id="name">
+                        <input value="{{$category->name}}" type="text" name="name" id="name">
                         <label for="description">Descrição</label>
-                        <input type="text" name="description" id="description">
-                        <label for="type">Tipo de Categoria</label>
-                        <select name="type" id="type">
-                            @foreach ($types as $type)
-                                <option value="{{$type->id}}">{{$type->code}}</option>
-                            @endforeach
-                        </select>
-                        <input class="border-solid border-2 border-sky-500 text-gray-200" type="submit" value="submit">
+                        <input value="{{$category->description}}" type="text" name="description" id="description">
+                        <input class="text-gray-200" type="submit" value="Enviar">
                     </form>
                 </div>
             </div>

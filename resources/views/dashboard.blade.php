@@ -5,6 +5,7 @@
 
             <a href="/dashboard/category/create">| Criar Categoria |</a>
             <a href="/dashboard/category/index">Mostrar Categorias</a>
+            <a href="/dashboard/triggerSeeder">| Gerar Categorias e Jogos (Seeder) | </a>
         </h2>
     </x-slot>
 

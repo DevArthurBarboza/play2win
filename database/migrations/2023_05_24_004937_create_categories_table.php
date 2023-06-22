@@ -15,7 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->unsignedBigInteger('type_id');
             $table->timestamps();
+
+            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
         });
     }
 
@@ -24,6 +27,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+
+        Schema::table('types',function (Blueprint $table){
+            $table->dropForeign('types_category_id_foreign');
+        });
+
         Schema::dropIfExists('categories');
     }
 };

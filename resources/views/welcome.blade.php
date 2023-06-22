@@ -12,6 +12,23 @@
 
     </head>
     <body class="antialiased">
-        <a href="/dashboard">Acessar Admin</a>
+        <div>
+            <em>Painel Admin</em>
+            <div>
+                <a href="/register">Registrar Usuário Admin</a>
+            </div>
+            <div>
+                <a href="/dashboard">Acessar Admin</a>
+            </div>
+        </div>
+        <div>
+            <em>Usuário</em>    
+            <div>
+                <a href="/user/login">Logar</a>
+            </div>
+            <div>
+                <a href="/user/register">Registrar Usuário</a>
+            </div>
+        </div>
     </body>
 </html>

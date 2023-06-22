@@ -11,6 +11,17 @@ class Category extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'type_id'
     ];
+
+    public function games(): HasMany
+    {
+        return $this->hasMany(Game::class);
+    }
+
+    public function types(): HasOne
+    {
+        return $this->hasOne(Type::class);
+    }
 }
