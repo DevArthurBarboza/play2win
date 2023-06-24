@@ -30,13 +30,14 @@
         
 
         validar : function (value){
-        let saldo = document.getElementById('saldo').textContent;
-        if (parseFloat(value) > parseFloat(saldo)){
-            document.getElementById('aposta').value = saldo
-            document.getElementById('confirm').disabled = true
-            return;
-        }
-        document.getElementById('confirm').disabled = false
+            if(value == undefined) value = document.getElementById('aposta').value
+            let saldo = document.getElementById('saldo').textContent;
+            if (parseFloat(value) > parseFloat(saldo)){
+                document.getElementById('confirm').disabled = true
+                return false;
+            }
+            document.getElementById('confirm').disabled = false
+            return true
         },
 
         validarAposta : function(){
@@ -73,6 +74,7 @@
             // if(min == undefined || max == undefined){
             //     throw new Error("Erro min ou max não definidos");
             // }
+            if(max == undefined) max = Math.random() * 20
             if(min >= max){
                 this.finished = true
                 this.finalizar()
@@ -135,7 +137,12 @@
 
 
         play :function(){
-            this.girarRoleta()  
+            if(this.validar()){
+                document.getElementById('aposta').style.backgroundColor = 'none'
+                this.girarRoleta()  
+                return
+            }
+            document.getElementById('aposta').style.backgroundColor = 'red'
         },
 
 
@@ -161,6 +168,7 @@
                 let resultado = document.getElementById('resultado')
                 resultado.setAttribute('style',"display:block")
                 let novoSaldo = this.calcularNovoSaldo()
+                this.novoSaldo = novoSaldo
                 resultado.innerHTML = "<p>Você Ganhou !</p><p>Novo Saldo: R$" + novoSaldo + "</p>"
                 return
             }
@@ -169,8 +177,8 @@
             let resultado = document.getElementById('resultado')
             resultado.setAttribute('style',"display:block")
             let novoSaldo = this.calcularNovoSaldo()
-            resultado.innerHTML = "<p>Você Perdeu !</p><p>Novo Saldo: R$" + novoSaldo + "</p>"
             this.novoSaldo = novoSaldo
+            resultado.innerHTML = "<p>Você Perdeu !</p><p>Novo Saldo: R$" + novoSaldo + "</p>"
         },
 
         atualizarSaldo : function(){
@@ -193,6 +201,7 @@
                 body: JSON.stringify(dados), // O corpo da requisição (opcional, depende do tipo de requisição)
             })
             .then(data => {
+                teste = saldo
                 document.getElementById('saldo').textContent = saldo
             })
             .catch(error => {
@@ -219,10 +228,10 @@
             if(intervaloAngular < 2.08 && intervaloAngular >= 1.05){
                 return 'red'
             }
-            if(intervaloAngular < 3.15 && intervaloAngular >= 2.08){
+            if(intervaloAngular < 3.14 && intervaloAngular >= 2.08){
                 return 'green'
             }
-            if(intervaloAngular < 4.19 && intervaloAngular >= 3.15){
+            if(intervaloAngular < 4.19 && intervaloAngular >= 3.14){
                 return 'orange'
             }
             if(intervaloAngular < 5.25 && intervaloAngular >= 4.19){
@@ -260,7 +269,7 @@
 
 
 
-   
+
 
     <a href="/user/account/index"> Voltar</a>
     <div>
@@ -285,8 +294,16 @@
 
     <button id="confirm" onclick="Roleta.play()">Confirmar!</button>
 
-    <canvas id="roletaCanvas" width="300" height="300" style="border:1px solid #000000;">
-    </canvas>
+    <canvas id="roletaCanvas" width="300" height="300" style="border:1px solid #000000;"></canvas>
+    
+    <div style="display: inline-block">
+        
+        <div style="display: flex">
+            <img src="{{ URL::to('/') }}/seta-direita.png" alt="" style="position: relative; bottom:30px;">
+            
+            <strong>START</strong>
+        </div>
+    </div>
 
     <div style="display: none;width:200px; position:fixed;" id="resultado-container">
         <button style="color:white;border:1px solid red;background-color:red;" onclick="Roleta.close()">X</button>
@@ -300,7 +317,6 @@
     <script>
         document.addEventListener('load', Roleta.desenharRoleta())
         document.getElementById('finished').addEventListener('change', Roleta.finalizar)
-
     </script>
 
 
