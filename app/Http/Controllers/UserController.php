@@ -81,6 +81,21 @@ class UserController extends Controller
         return redirect()->route('user.account.index')->with('message','Saldo Atualizado!');
     }
 
+    public function updateCashInGaming(Request $request)
+    {
+        try{
+
+            $user = User::find($request->user_id);
+            $user->cash = $request->saldo;
+            $user->save();
+            return true;
+        }catch(Exception $e){
+            return $e->getMessage();
+        }
+            
+        // 
+    }
+
     /**
      * Show the form for creating a new resource.
      */

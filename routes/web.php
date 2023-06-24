@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get("/user/account/pay",[UserController::class,'viewCash']);
 
     Route::post("/user/account/pay",[UserController::class,'updateCash']);
+    Route::post("/user/account/updatecash",[UserController::class,'updateCashInGaming']);
 
     Route::get("/game/{id}",[GameController::class,"index"]);
 
