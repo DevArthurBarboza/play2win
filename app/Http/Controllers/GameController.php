@@ -21,13 +21,10 @@ class GameController extends Controller
         $category = Category::find($game->category_id);
         $type = Type::find($category->type_id);
         if($type->code == "Roleta"){
-            return view('game.roleta',['user' => Auth::user()]);
+            return view('game.roleta',['user' => Auth::user(),'game' => $game]);
         }
         if($type->code == "Crash"){
             return view('game.crash',['user' => Auth::user()]);
-        }
-        if($type->code == "Roleta"){
-            return view('game.roleta',['user' => Auth::user()]);
         }
     }
 
