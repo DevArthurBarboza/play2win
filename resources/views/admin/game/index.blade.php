@@ -19,7 +19,7 @@
                                     <span>Multiplicador : {{$game->multiplier}}</span>
                                 </div>
                                 <div>
-                                     <a href="/dashboard/games/edit/{{$game->id}}">Editar</a>
+                                     <a class="text-blue-600" href="/dashboard/games/edit/{{$game->id}}">Editar</a>
                                 </div>
 
                             </div>
