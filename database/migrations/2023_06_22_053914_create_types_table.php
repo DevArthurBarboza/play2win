@@ -18,13 +18,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        $type = new Type;
-        $type->code = 'Roleta';
-        $type->save();
-
-        $type2 = new Type;
-        $type2->code = 'Crash';
-        $type2->save();
     }
 
     /**
