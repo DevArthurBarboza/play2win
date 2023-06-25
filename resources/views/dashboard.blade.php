@@ -1,13 +1,6 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-
-            <a href="/dashboard/category/create">| Criar Categoria |</a>
-            <a href="/dashboard/category/index">Mostrar Categorias</a>
-            <a href="/dashboard/triggerSeeder">| Gerar Categorias e Jogos (Seeder) | </a>
-        </h2>
-    </x-slot>
+    
+    @include('layouts.header')
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">

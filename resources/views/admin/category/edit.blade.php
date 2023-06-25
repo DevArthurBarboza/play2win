@@ -1,13 +1,6 @@
 <x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-
-            <a href="/dashboard/category/create">| Criar Categoria |</a>
-            <a href="/dashboard/category/index">Mostrar Categorias</a>
-        </h2>
-    </x-slot>
+    @include('layouts.header')
 
 
     <div class="py-12">
@@ -17,11 +10,18 @@
                     <form action="/dashboard/category/update/{{$category->id}}" method="POST">
                         @csrf
                         @method('PUT')
-                        <label for="name">Nome</label>
+                        <label class="text-gray-200" for="name">Nome</label>
                         <input value="{{$category->name}}" type="text" name="name" id="name">
-                        <label for="description">Descrição</label>
+                        <label class="text-gray-200" for="description">Descrição</label>
                         <input value="{{$category->description}}" type="text" name="description" id="description">
+                        <label class="text-gray-200" for="type">Tipo de Jogo</label>
+                        <select name="type" id="type">
+                            @foreach($types as $type)
+                                <option value="{{$type->id}}">{{$type->code}}</option>
+                            @endforeach
+                        </select>
                         <input class="text-gray-200" type="submit" value="Enviar">
+                        <a class="text-gray-200" href="/dashboard/category/delete/{{$category->id}}">Excluir</a>
                     </form>
                 </div>
             </div>

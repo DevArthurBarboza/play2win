@@ -1,13 +1,6 @@
 <x-app-layout>
 
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('Dashboard') }}
-
-            <a href="/dashboard/category/create">| Criar Categoria |</a>
-            <a href="/dashboard/category/index">Mostrar Categorias</a>
-        </h2>
-    </x-slot>
+    @include('layouts.header')
 
     @forelse ($categories as $category)
         <div class="py-12">
@@ -25,9 +18,12 @@
                                   </div>
 
                                   <div>
-                                      <a href="/dashboard/category/edit/{{$category->id}}">Editar</a>
-                                  </div>
+                                    <span>Tipo de Jogo: {{$types[$category->type_id - 1]->code}}</span>
+                                </div>
 
+                                  <div>
+                                      <a class="text-blue-600" href="/dashboard/category/edit/{{$category->id}}">Editar</a>
+                                  </div>
                             </div>
                         </div>
                     </div>
