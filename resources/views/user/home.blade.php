@@ -17,6 +17,7 @@
         <div class="category-container" style="border:2px solid black; margin:0 0 20px 0;padding:15px">
             <div><h2>{{$category->name}}</h2></div>
             <div>{{$category->description}}</div>
+            <a href="/user/category/game/{{$category->id}}">Acessar Categoria</a>
         </div>
     @empty
         <div>
