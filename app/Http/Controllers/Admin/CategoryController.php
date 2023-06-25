@@ -15,7 +15,8 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::get();
-        return view('admin.category.index', ['categories' => $categories]);
+        $types = Type::all();
+        return view('admin.category.index', ['categories' => $categories,'types' => $types]);
     }
 
     /**
@@ -35,7 +36,9 @@ class CategoryController extends Controller
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
+        $category->type_id = $request->type_id;
         $category->save();
+        return redirect()->route('category.index');
     }
 
     /**
@@ -51,7 +54,7 @@ class CategoryController extends Controller
      */
     public function edit(Request $request, Category $category)
     {
-        return view('admin.category.edit', ['category' => $category]);
+        return view('admin.category.edit', ['category' => $category,'types' => Type::all()]);
     }
 
     /**
@@ -61,7 +64,7 @@ class CategoryController extends Controller
     {
         $category->name = $request->name;
         $category->description = $request->description;
-
+        $category->type_id = $request->type_id;
         $category->save();
 
         return redirect()->route('category.index');
@@ -70,8 +73,9 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Admin $admin)
+    public function destroy($id)
     {
-        //
+        Category::destroy($id);
+        return redirect()->route('category.index');
     }
 }
