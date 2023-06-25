@@ -19,5 +19,8 @@
             <a href="/user/account/pay">Quero Mais!</a>
         </div>
     </div>
+    <div>
+        <a href="/user/logout">Logout</a>
+    </div>
 </body>
 </html>

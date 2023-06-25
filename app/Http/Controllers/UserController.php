@@ -58,6 +58,17 @@ class UserController extends Controller
         // Credenciais inválidas
         return redirect()->back()->with('error', 'Credenciais inválidas.');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('login-user')->with('success', 'Logout realizado com sucesso.');
+    }
+
     public function register(Request $request)
     {
         $user = User::create([

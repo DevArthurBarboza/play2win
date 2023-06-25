@@ -29,7 +29,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('/user/login',[UserController::class,'viewLogin']);
+Route::get('/user/login',[UserController::class,'viewLogin'])->name('login-user');
 
 Route::get('/user/register',[UserController::class,'viewRegister']);
 
@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function () {
     Route::get("/game/{id}",[GameController::class,"index"]);
 
     Route::get('/home',[HomeController::class,'home'])->name('home');
+
+    Route::get('/user/logout', [UserController::class, 'logout'])->name('logout');
 
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
