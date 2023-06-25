@@ -29,7 +29,7 @@ class AdminController extends Controller
     {
         $adminSeeder = new \Database\Seeders\AdminSeeder;
         $adminSeeder->run();
-        return redirect()->route('dashboard');
+        return redirect('/');
     }
 
     /**
