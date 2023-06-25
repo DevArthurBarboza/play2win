@@ -2,10 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
 use App\Models\Game;
+use App\Models\Type;
 use Illuminate\Support\Str;
 
 class AdminSeeder extends Seeder
@@ -15,9 +15,17 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
+        $type = new Type;
+        $type->code = 'Roleta';
+        $type->save();
+
+        $type2 = new Type;
+        $type2->code = 'Crash';
+        $type2->save();
+
         $category = new Category;
         $category->name = "Roleta";
-        $category->description = "Roleta de 6 números ! Escolha um e tente a sorte!";
+        $category->description = "Roleta de 6 cores ! Escolha uma e tente a sorte!";
         $category->type_id = 1;
         $category->save();
 
