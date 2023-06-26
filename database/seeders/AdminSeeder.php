@@ -38,6 +38,7 @@ class AdminSeeder extends Seeder
         $game = new Game;
         $game->name = "Roleta - 6 Números";
         $game->access_code = Str::uuid();
+        $game->is_active = true;
         $game->category_id = $category->id;
         $game->save();
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\HistoryController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,6 +51,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('/user/account/index',[UserController::class,'viewIndex'])->name('user.account.index');
     Route::get("/user/account/pay",[UserController::class,'viewCash']);
+
+    Route::get('/user/history', [HistoryController::class, 'show'])->name('user.show.history');
 
     Route::post("/user/account/pay",[UserController::class,'updateCash']);
     Route::post("/user/account/updatecash",[UserController::class,'updateCashInGaming']);

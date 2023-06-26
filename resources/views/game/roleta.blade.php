@@ -26,6 +26,7 @@
             usuarioAcertou : false,
             novoSaldo : 0,
             firstTry : true,
+            alteracao_saldo : 0,
 
             
 
@@ -65,16 +66,12 @@
             pegarValorAleatorio : function(maximo){
                 let valor = Math.floor(Math.random() * maximo)
                 if(valor%2 ==0){
-                    return
+                    return valor
                 }
                 return valor+1
             },
 
             desenharRoletaRecursiva : function(min,max){
-                // if(min == undefined || max == undefined){
-                //     throw new Error("Erro min ou max não definidos");
-                // }
-                if(max == undefined) max = Math.random() * 20
                 if(min >= max){
                     this.finished = true
                     this.finalizar()
@@ -180,9 +177,11 @@
 
             atualizarSaldo : function(){
                 let saldo = this.novoSaldo
+                let aposta = document.getElementById('aposta').value;
                 let user_id = document.getElementById('user_id').value
                 let url = "https://play2win.lndo.site/user/account/updatecash"
-                let dados = {'saldo' : saldo, 'user_id' : user_id}
+                let game_id = document.getElementById('game_id').value
+                let dados = {'novoSaldo' : saldo, 'user_id' : user_id, 'won' : this.usuarioAcertou, 'game_id' : game_id, 'alteracao_saldo' : aposta}
                 let token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
                 fetch(url, {
@@ -285,7 +284,8 @@
 
     <input type="hidden" id="user_id" name="user_id" value="{{$user->id}}">
     <input type="hidden" id="finished" name="finished" value="false">
-    <input type="hidden" name="multiplicador" value="{{$game->multiplier}}">
+    <input type="hidden" id="multiplicador" name="multiplicador" value="{{$game->multiplier}}">
+    <input type="hidden" id="game_id" name="game_id" value="{{$game->id}}">
 
     <button id="confirm" onclick="Roleta.play()">Confirmar!</button>
 
