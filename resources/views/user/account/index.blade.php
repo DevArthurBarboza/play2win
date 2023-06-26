@@ -14,13 +14,21 @@
     <div>Olá {{$user->name}} ! </div>
     <div>{{$user->email}}</div>
     <div>
-        Você tem R$ {{$user->cash}} 
+        Você tem R$ 
+        @if($user->cash == 0)
+        0
+        @else
+        {{$user->cash}}
+        @endif
         <div>
             <a href="/user/account/pay">Quero Mais!</a>
         </div>
     </div>
     <div>
         <a href="/user/logout">Logout</a>
+    </div>
+    <div>
+        <a href="/user/history">Histórico de Partidas</a>
     </div>
 </body>
 </html>
