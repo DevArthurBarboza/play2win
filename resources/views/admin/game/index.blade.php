@@ -19,6 +19,15 @@
                                     <span>Multiplicador : {{$game->multiplier}}</span>
                                 </div>
                                 <div>
+                                    <span>
+                                        @if ($game->is_active)
+                                            ATIVADO        
+                                        @else 
+                                            DESATIVADO
+                                        @endif
+                                    </span>
+                                </div>
+                                <div>
                                      <a class="text-blue-600" href="/dashboard/games/edit/{{$game->id}}">Editar</a>
                                 </div>
 

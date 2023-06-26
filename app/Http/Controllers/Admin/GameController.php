@@ -2,13 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\StoreGameRequest;
 use Illuminate\Http\Request;
-use App\Http\Requests\UpdateGameRequest;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Type;
 
 class GameController extends Controller
 {
@@ -51,6 +47,7 @@ class GameController extends Controller
         $game = Game::find($id);
         $game->name = $request->name;
         $game->multiplier = $request->multiplier;
+        $game->is_active = $request->is_active;
         $game->save();
         return redirect()->route('games.index');
     }

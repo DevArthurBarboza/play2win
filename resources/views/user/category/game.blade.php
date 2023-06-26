@@ -9,14 +9,16 @@
 </head>
 <body>
     @foreach ($games as $game)
-    <div class="card" style="width: 18rem;">
-        <div class="card-body">
-          <h5 class="card-title">{{$game->name}}</h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary">{{$game->multiplier}}</h6>
-          <p class="card-text">{{$game->created_at}}</p>
-          <a class="card-link" href="/game/{{$game->id}}">Jogar!</a>
+      @if($game->is_active)
+        <div class="card" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">{{$game->name}}</h5>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{$game->multiplier}}</h6>
+            <p class="card-text">{{$game->created_at}}</p>
+            <a class="card-link" href="/game/{{$game->id}}">Jogar!</a>
+          </div>
         </div>
-      </div>
+      @endif
     @endforeach
 </body>
 </html>
