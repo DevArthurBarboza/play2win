@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use App\Models\User;
-
+use App\Models\History;
 class UserController extends Controller
 {
     public function viewRegister()
@@ -45,13 +45,6 @@ class UserController extends Controller
 
             session(['aluno_id' => $user->id]);
 
-            // if ($user->admin) {
-                
-            //     return redirect()->route('admin');
-            // } else {
-                
-            //    
-            // }
             return redirect()->route('home');
         }
 
@@ -95,16 +88,23 @@ class UserController extends Controller
     public function updateCashInGaming(Request $request)
     {
         try{
-
             $user = User::find($request->user_id);
-            $user->cash = $request->saldo;
+            $user->cash = $request->novoSaldo;
             $user->save();
+
+            $history = new History;
+            $history->user_id = $request->user_id;
+            $history->game_id = $request->game_id;
+            $history->won = $request->won;
+            $history->new_cash = $request->novoSaldo;
+            $history->bet_amount = $request->alteracao_saldo;
+            $history->save();
+
             return true;
-        }catch(Exception $e){
+        }catch(\Exception $e){
             return $e->getMessage();
         }
             
-        // 
     }
 
     /**
