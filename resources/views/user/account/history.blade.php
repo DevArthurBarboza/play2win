@@ -10,8 +10,6 @@
 <body>
     <div>
         <div class="container">
-
-            
             <a href="/user/account/index">Voltar</a>
 
             <table class="table">
