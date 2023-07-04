@@ -5,9 +5,18 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Game;
+use Illuminate\Support\Str;
+use App\Models\Category;
 
 class GameController extends Controller
 {
+
+
+    public function create(){
+
+        return view("admin.game.create",['categories' => Category::all()]);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -26,7 +35,8 @@ class GameController extends Controller
         $game = new Game();
         $game->name = $request->name;
         $game->multiplier = $request->multiplier;
-        $game->type_id = $request->type_id;
+        $game->category_id = $request->category;
+        $game->access_code = Str::uuid();
         $game->save();
         return redirect()->route('games.index');
     }

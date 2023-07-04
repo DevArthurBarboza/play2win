@@ -11,8 +11,16 @@
                         @csrf
                         <label class="text-gray-200" for="name">Nome</label>
                         <input type="text" name="name" id="name">
-                        <label class="text-gray-200" for="description">Descrição</label>
-                        <input type="text" name="description" id="description">
+                        <label class="text-gray-200" for="multiplier">Multiplicador</label>
+                        <input type="number" step='0.001' name="multiplier" id="multiplier">
+                        <label for="category">Categoria</label>
+                        <select name="category" id="category">
+                            @forelse($categories as $category):
+                            <option value="{{$category->id}}">{{$category->name}}</option>
+                            @empty 
+                            <option value="">Nenhuma categoria cadastrada</option>
+                            @endforelse
+                        </select>
                         <input class="border-solid border-2 border-sky-500 text-gray-200" type="submit" value="Enviar">
                     </form>
                 </div>
