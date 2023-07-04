@@ -20,7 +20,6 @@ class HistoryController extends Controller
             }
         }
 
-        // dd($gamesPlayed);
         return view('user.account.history',['history' => $history, 'games' => $gamesPlayed]);
     }
 }
