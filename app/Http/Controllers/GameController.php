@@ -24,7 +24,7 @@ class GameController extends Controller
             return view('game.roleta',['user' => Auth::user(),'game' => $game]);
         }
         if($type->code == "Crash"){
-            return view('game.crash',['user' => Auth::user()]);
+            return view('game.crash',['user' => Auth::user(),'game' => $game]);
         }
     }
 
