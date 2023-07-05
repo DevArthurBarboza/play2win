@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('category_id');
             $table->string('name');
-            $table->boolean('is_active')->default(false);
+            $table->boolean('is_active')->default(false)->nullable();
             $table->uuid('access_code');
             $table->float('multiplier',6,3)->default(1.0);
             $table->timestamps();
