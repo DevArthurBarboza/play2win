@@ -57,7 +57,11 @@ class GameController extends Controller
         $game = Game::find($id);
         $game->name = $request->name;
         $game->multiplier = $request->multiplier;
-        $game->is_active = $request->is_active;
+        if($request->is_active){
+            $game->is_active = true;
+        }else{
+            $game->is_active = false;
+        }
         $game->save();
         return redirect()->route('games.index');
     }

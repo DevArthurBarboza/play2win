@@ -15,7 +15,10 @@ class GameController extends Controller
     public function index($id)
     {
         $game = Game::find($id);
-
+        if(!$game->is_active)
+        {
+            return redirect()->route('home');
+        }
         $category = Category::find($game->category_id);
         $type = Type::find($category->type_id);
         if($type->code == "Roleta"){
