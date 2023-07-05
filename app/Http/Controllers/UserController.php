@@ -79,7 +79,7 @@ class UserController extends Controller
     public function updateCash(Request $request)
     {
         $user = User::find(Auth::id());
-        $user->cash = $request->cash;
+        $user->cash += $request->cash;
         $user->save();
 
         return redirect()->route('user.account.index')->with('message','Saldo Atualizado!');
@@ -103,8 +103,7 @@ class UserController extends Controller
             return true;
         }catch(\Exception $e){
             return $e->getMessage();
-        }
-            
+        }          
     }
 
 }

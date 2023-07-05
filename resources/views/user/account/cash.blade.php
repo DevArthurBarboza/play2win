@@ -14,8 +14,15 @@
             @csrf
             <div class="card">
                 <div class="card-body">
-                    Você tem R$ <input type="number" step="0.01" name="cash" value="{{$user->cash}}">
-                    <button>Atualizar</button>
+                    <div class="card-title">
+                        Você tem <em>R$ {{$user->cash}}</em>
+                    </div>
+                    <div class="card-text">
+                        <div>
+                            <input type="number" step="0.01" min="1" name="cash">
+                            <button>Comprar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </form>
