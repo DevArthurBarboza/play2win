@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$game->name}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    @include('layouts.bootstrap')
 </head>
 <body>
     <script>
@@ -25,29 +26,19 @@
             finished : false,
             usuarioAcertou : false,
             novoSaldo : 0,
-            firstTry : true,
             alteracao_saldo : 0,
 
-            
+
 
             validar : function (value){
                 if(value == undefined) value = document.getElementById('aposta').value
                 let saldo = document.getElementById('saldo').textContent;
-                if (parseFloat(value) > parseFloat(saldo)){
+                if (parseFloat(value) > parseFloat(saldo) || parseFloat(value) <= 0 ){
                     document.getElementById('confirm').disabled = true
                     return false;
                 }
-                document.getElementById('confirm').disabled = false
                 return true
             },
-
-            validarAposta : function(){
-                let numero = document.getElementById('numero');
-                if(numero.value < 1 || numero.value > 6){
-                    numero.value = 1
-                }
-            },
-
 
             girarRoleta : function () {
                 return new Promise((resolve) => {
@@ -55,9 +46,6 @@
                     const randomNumber = Math.floor(Math.random() * this.numParts);
                     const destinoAngulo = randomNumber * angle;
 
-                    // this.ponteiroAngulo = destinoAngulo;
-
-                    this.ponteiroAngulo = 0;
                     this.desenharRoletaRecursiva(0,this.pegarValorAleatorio(20));
                     resolve();
                 })
@@ -218,7 +206,7 @@
             },
 
             identificarCor : function(intervaloAngular){
-
+                console.log(intervaloAngular)
                 if(intervaloAngular < 1.05 && intervaloAngular > 0){
                     return 'black'
                 }
@@ -251,7 +239,6 @@
             if(min >= max){
                 return
             }
-            console.log(min)
 
             Roleta.ponteiroAngulo = min + Math.random()
             Roleta.desenharRoleta()
@@ -264,7 +251,9 @@
         
     </script>
 
-    <a href="/user/account/index"> Voltar</a>
+    <div class="container">
+
+    <a href="/home"> Voltar</a>
     <div>
         <span>Seu Saldo: R$</span>
         <span id="saldo">{{$user->cash}}</span>
@@ -289,6 +278,8 @@
 
     <button id="confirm" onclick="Roleta.play()">Confirmar!</button>
 
+</div>
+<div class="container" style="margin-top:50px ">
     <canvas id="roletaCanvas" width="300" height="300" style="border:1px solid #000000;"></canvas>
     
     <div style="display: inline-block">
@@ -312,6 +303,7 @@
         document.addEventListener('load', Roleta.desenharRoleta())
         document.getElementById('finished').addEventListener('change', Roleta.finalizar)
     </script>
+</div>
 
 </body>
 </html>
