@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{$game->name}}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="https://pixijs.download/release/pixi.js"></script>
 </head>
 <body>
     <script>
@@ -13,22 +14,85 @@
 
             usuarioAcertou : false,
             novoSaldo : 0,
+            saldoValido : false,
+            multiplicadorValido : false,
+
+            validarCampo : function(campo){
+                if(campo.value < 0){
+                    document.getElementById('confirm').disabled = true
+                    this.multiplicadorValido = false
+                    return false;
+                }
+                this.multiplicadorValido = true
+                if(this.multiplicadorValido && this.saldoValido){
+                    document.getElementById('confirm').disabled = false
+                }
+            },
 
             validar : function (value){
                 if(value == undefined) value = document.getElementById('aposta').value
                 let saldo = document.getElementById('saldo').textContent;
-                if (parseFloat(value) > parseFloat(saldo)){
+                if (parseFloat(value) > parseFloat(saldo) || parseFloat(value) <= 0 ){
+                    this.saldoValido = false
                     document.getElementById('confirm').disabled = true
                     return false;
                 }
-                document.getElementById('confirm').disabled = false
+                this.saldoValido = true
+                if(this.multiplicadorValido && this.saldoValido){
+                    document.getElementById('confirm').disabled = false
+                }
                 return true
+            },
+
+            gerarGrafico : function(valor){                
+                document.getElementById('grafico').innerHTML = '';
+                const app = new PIXI.Application({ width: 300, height: {{$game->multiplier}} + 5});
+                            
+                    const graphics = new PIXI.Graphics();
+                    graphics.beginFill(0xFF0000);
+                    graphics.drawRect(50, 250, 200, 0); // Altura inicial definida como 0
+                    graphics.endFill();
+
+                    app.stage.addChild(graphics);
+
+                    const targetHeight = valor; // Altura final do retângulo
+                    const animationDuration = 2000;
+                    const startHeight = graphics.height; // Altura inicial do retângulo
+                    let startTime = null;
+
+                    const text = new PIXI.Text('', { fontFamily: 'Arial', fontSize: 24, fill: 'white' });
+                    text.position.set(100, 250 - targetHeight); // Posição do texto ajustada
+                    app.stage.addChild(text);
+
+                    function animate(timestamp) {
+                        if (!startTime) {
+                            startTime = timestamp;
+                        }
+                        const elapsed = timestamp - startTime;
+                        const progress = Math.min(elapsed / animationDuration, 1);
+                        const newHeight = startHeight + (targetHeight - startHeight) * progress;
+                  
+                        graphics.clear();
+                        graphics.beginFill(0xFF0000);
+                        graphics.drawRect(50, 250 - newHeight, 200, newHeight); // Desenho do retângulo ajustado
+                        graphics.endFill();
+                  
+                        text.position.y = 250 - newHeight; // Posição do texto ajustada
+                        text.text = Math.round(newHeight).toString();
+                  
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        }
+                    }
+                document.getElementById('grafico').appendChild(app.view);
+                requestAnimationFrame(animate);
             },
 
             play :function(){
                 if(this.validar()){
                     let multiplier = document.getElementById('multiplier').value
                     let resultado = (Math.random() * {{$game->multiplier}}).toFixed(2)
+                    this.gerarGrafico(resultado)
                     let saldo = document.getElementById('saldo').textContent
                     let aposta = document.getElementById('aposta').value
                     this.novoSaldo = saldo
@@ -113,27 +177,31 @@
                 document.getElementById('resultado-container').setAttribute('style','display:none');
                 document.getElementById('resultado').innerHTML="";
                 document.getElementById('tela-jogo').innerHTML="";
+                document.getElementById('grafico').innerHTML="";
             }
         }
         
     </script>
 
-    <a href="/user/account/index"> Voltar</a>
+    <a href="/home"> Voltar</a>
     <div>
-        <span>Seu Saldo: R$</span>
-        <span id="saldo">{{$user->cash}}</span>
+        <h3>Seu Saldo: R$<span id="saldo">{{$user->cash}}</span></h3>
     </div>
+    <h3>Multiplicador : {{$game->multiplier}}x</h3>
     <label for="aposta">Valor à apostar</label>
     <input onchange="Crash.validar(this.value)" type="number" name="aposta" id="aposta">
 
     <label for="cor">Informe o multiplicador</label>
-    <input type="number" name="multiplier" id="multiplier">
+    <input type="number" name="multiplier" onchange="Crash.validarCampo(this)" id="multiplier">
 
     <input type="hidden" id="user_id" name="user_id" value="{{$user->id}}">
     <input type="hidden" id="game_id" name="game_id" value="{{$game->id}}">
 
     <button id="confirm" onclick="Crash.play()">Confirmar!</button>
 
+    <div id="grafico">
+
+    </div>
     <div id="tela-jogo">
 
     </div>
