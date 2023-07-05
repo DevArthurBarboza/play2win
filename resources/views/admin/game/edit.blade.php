@@ -15,7 +15,7 @@
                         <label class="text-gray-200" for="multiplier">Multiplicador</label>
                         <input type="number" value="{{$game->multiplier}}" name="multiplier" id="multiplier" step="0.01">
                         <label for="is_active">Ativado</label>
-                        <input type="checkbox" value="{{$game->is_active}}" onclick='GameAux.toggle(this)' name="is_active" id="is_active">
+                        <input type="checkbox" onclick='GameAux.toggle(this)' name="is_active" id="is_active" @if($game->is_active)checked="true" @endif>
                         <div class="mt-10">                        
                             <input class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded " type="submit" value="Atualizar">
                         </div>
